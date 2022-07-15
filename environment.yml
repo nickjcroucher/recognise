@@ -8,5 +8,6 @@ dependencies:
   - lastz
   - multiz
   - gubbins>=3.2.1
+  - multiprocess
   - pytest
   - pytest-cov
