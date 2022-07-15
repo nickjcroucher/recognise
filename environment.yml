@@ -1,0 +1,12 @@
+name: recognise_env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python>=3.8
+  - lastz
+  - multiz
+  - gubbins>=3.2.1
+  - pytest
+  - pytest-cov
