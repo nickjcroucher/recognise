@@ -4,10 +4,17 @@ channels:
   - bioconda
   - defaults
 dependencies:
+  # python
   - python>=3.8
+  - multiprocess
+  - tempfile
+  # alignment
   - lastz
   - multiz
+  - minigraph
+  - gfatools
+  # recombination
   - gubbins>=3.2.1
-  - multiprocess
+  # testing
   - pytest
   - pytest-cov
