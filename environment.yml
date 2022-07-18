@@ -7,8 +7,8 @@ dependencies:
   # python
   - python>=3.8
   - multiprocess
-  - tempfile
   # alignment
+  - biopython
   - lastz
   - multiz
   - minigraph
