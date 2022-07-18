@@ -1,2 +1,5 @@
 test/data
 test/__pycache__
+test/.coverage
+test/coverage.xml
+test/coverage.lcov
