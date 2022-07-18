@@ -8,7 +8,7 @@ dependencies:
   - python>=3.8
   - multiprocess
   # alignment
-  - biopython
+  - biopython>=1.69
   - lastz
   - multiz
   - minigraph
