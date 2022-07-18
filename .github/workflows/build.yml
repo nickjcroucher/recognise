@@ -37,9 +37,9 @@ jobs:
             $CONDA/bin/conda env update --file environment.yml && conda init
       - name: Run C++ and python tests
         run: |
-            source $CONDA/etc/profile.d/conda.sh && conda activate recognise_env && cd test && pytest && cd ..
+            source $CONDA/etc/profile.d/conda.sh && conda activate recognise_env && cd test && coverage run -m pytest && coverage xml --include=run_test.py && coverage lcov --include=run_test.py && cd ..
       - name: Upload python code coverage analysis
         uses: codecov/codecov-action@v2
         with:
-            files: ./python/coverage.xml,gubbins_coverage.info
+            files: ./test/coverage.xml
 
