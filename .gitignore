@@ -1,1 +1,2 @@
-tests/data
+test/data
+test/__pycache__
