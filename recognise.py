@@ -184,7 +184,7 @@ def compare_recombinant_recipient(recipient, recipient_id, recombinant_name, rec
 def output_analyses(recombinations,recipient_length,prefix):
     # generate star tree and record nodes for GFF
     # output in GFF format like Gubbins for visualisation
-    with open(prefix + '_recombinations.gff','w') as rec_gff:
+    with open(prefix + '.recombination_predictions.gff','w') as rec_gff:
         rec_gff.write('##gff-version 3\n##sequence-region SEQUENCE 1 ' + str(recipient_length) + '\n') # need to extract recipient length
         for name in recombinations:
             for recombination in recombinations[name]:

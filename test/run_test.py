@@ -6,7 +6,7 @@ import unittest
 import subprocess
 
 def clean_output(prefix):
-    for suffix in []:
+    for suffix in ['.recombination_predictions.gff']:
         os.remove('prefix' + 'suffix')
 
 if not os.path.isdir('./data'):
