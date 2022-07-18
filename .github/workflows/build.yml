@@ -1,0 +1,45 @@
+name: build
+
+on:
+    push
+
+jobs:
+
+    test-osx:
+      runs-on: macos-latest
+
+      steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+          architecture: 'x64'
+      - name: Install dependencies with conda
+        run: |
+            sudo chown -R $UID $CONDA && source $CONDA/etc/profile.d/conda.sh && conda env update --file environment.yml
+      - name: Run C++ and python tests
+        run: |
+            source $CONDA/etc/profile.d/conda.sh && conda activate recognise_env && export PATH=$PATH:/lib/python3.9/site-packages/ && cd test && pytest && cd ..
+
+    test-linux:
+      runs-on: ubuntu-latest
+
+      steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+          architecture: 'x64'
+      - name: Install dependencies with conda
+        run: |
+            $CONDA/bin/conda env update --file environment.yml && conda init
+      - name: Run C++ and python tests
+        run: |
+            source $CONDA/etc/profile.d/conda.sh && conda activate recognise_env && cd test && pytest && cd ..
+      - name: Upload python code coverage analysis
+        uses: codecov/codecov-action@v2
+        with:
+            files: ./python/coverage.xml,gubbins_coverage.info
+
