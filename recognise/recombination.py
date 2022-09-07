@@ -78,4 +78,4 @@ def compare_recombinant_recipient(recipient, recipient_id, recombinant_name, rec
         
     # minigraph -cx lr  recipient_donor.gfa contigs.fa > recombinant.gaf
     
-    return recombinations
+    return mosaic_recombinations
