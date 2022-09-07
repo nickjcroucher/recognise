@@ -20,7 +20,7 @@ jobs:
             sudo chown -R $UID $CONDA && source $CONDA/etc/profile.d/conda.sh && conda env update --file environment.yml
       - name: Run python tests
         run: |
-            source $CONDA/etc/profile.d/conda.sh && conda activate recognise_env && setup.py install && export PATH=$PATH:/lib/python3.9/site-packages/ && cd test && pytest && cd ..
+            source $CONDA/etc/profile.d/conda.sh && conda activate recognise_env && python setup.py install && export PATH=$PATH:/lib/python3.9/site-packages/ && cd test && pytest && cd ..
 
     test-linux:
       runs-on: ubuntu-latest
@@ -37,7 +37,7 @@ jobs:
             $CONDA/bin/conda env update --file environment.yml && conda init
       - name: Run python tests
         run: |
-            source $CONDA/etc/profile.d/conda.sh && conda activate recognise_env && setup.py install && cd test && coverage run -m pytest && coverage xml --include=run_test.py && coverage lcov --include=run_test.py && cd ..
+            source $CONDA/etc/profile.d/conda.sh && conda activate recognise_env && python setup.py install && cd test && coverage run -m pytest && coverage xml --include=run_test.py && coverage lcov --include=run_test.py && cd ..
       - name: Upload python code coverage analysis
         uses: codecov/codecov-action@v2
         with:
