@@ -30,7 +30,7 @@ class Recombination(object):
         self.deletions_spanned = deletions_spanned
         self.deletions_matched = deletions_matched
         
-def compare_recombinant_recipient(recipient, recipient_id, recombinant_name, recombinant, donor, donor_maf, prefix, tmp, method):
+def compare_recombinant_recipient(recipient, recipient_id, recombinant_name, recombinant, donor, donor_maf, prefix, aln_dir, tmp, method):
     
     # select method
     if (donor is None or donor_maf is None) and method == '3seq':
@@ -77,5 +77,13 @@ def compare_recombinant_recipient(recipient, recipient_id, recombinant_name, rec
                                 shell = True)
         
     # minigraph -cx lr  recipient_donor.gfa contigs.fa > recombinant.gaf
+    
+    ####################
+    # Store alignments #
+    ####################
+    
+    if aln_dir is not None:
+        subprocess.check_output('cp ' + alignment_file + ' ' + aln_dir,
+                                shell = True)
     
     return mosaic_recombinations

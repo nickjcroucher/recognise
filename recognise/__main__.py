@@ -26,16 +26,22 @@ def parse_input_args():
                                                      default = None)
     iGroup.add_argument('--version',                 action='version', version='%(prog)s {version}'.format(version=__version__))
     iGroup.add_argument('--threads',           '-c', help='Number of threads to use for parallelisation',
-                                                  type=int,  default=1)
+                                                     type=int,
+                                                     default=1)
     iGroup.add_argument('--verbose',           '-v', help='Turn on debugging', action='store_true')
     iGroup.add_argument('--no-cleanup',        '-n', help='Do not cleanup intermediate files', action='store_true')
 
     mGroup = parser.add_argument_group('Data processing options')
-    mGroup.add_argument('--method',                  help='Method to use for detecting recombinations',
+    mGroup.add_argument('--method',            '-m', help='Method to use for detecting recombinations',
                                                      choices=['3seq', 'gubbins'],
                                                      default = '3seq')
-
+    mGroup.add_argument('--window',            '-w', help='Length of sequence increments used to search for breakpoints with 3seq',
+                                                     type=int,
+                                                     default=1000)
+                                                     
     oGroup = parser.add_argument_group('Output options')
+    oGroup.add_argument('--aln-output',           '-a', help='Store alignments in specified directory',
+                                                     default=None)
     oGroup.add_argument('--output',            '-o', help='Output prefix',
                                                      default='recognise')
 
@@ -57,6 +63,11 @@ def main():
     temp_dir = tempfile.TemporaryDirectory()
     sys.stderr.write('Processing data in ' + temp_dir.name + '\n')
     
+    # set up directory to store alignments if requested
+    if args.aln_output is not None:
+        if not os.path.isdir(args.aln_output):
+            os.mkdir(args.aln_output)
+    
     # validate input files
     recipient_id,recipient_length,recombinants = validate_input_files(args)
     
@@ -64,7 +75,7 @@ def main():
     structural_comparison = {}
     donor_maf = None
     if args.donor is not None:
-        structural_comparison = compare_donor_recipient()
+        structural_comparison = compare_donor_recipient(args.recipient,args.donor)
 
     # identify recombinations in recombinants
     recombinations = dict((recombinant,[]) for recombinant in recombinants.keys())
@@ -76,6 +87,7 @@ def main():
                                                         args.donor,
                                                         donor_maf,
                                                         args.output,
+                                                        args.aln_output,
                                                         temp_dir.name,
                                                         args.method)
                                                         
