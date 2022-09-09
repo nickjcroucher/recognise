@@ -44,3 +44,13 @@ def compare_donor_recipient(recipient,donor):
     # run lastz alignment
 #    donor_recipient_aln_file = run_lastz_alignment(recipient,donor)
     return {}
+
+def extract_subalignment(in_aln,include_list,out_aln):
+    input_alignment = SeqIO.index(in_aln, 'fasta')
+    included_sequences = [None for x in include_list]
+    for seq in input_alignment:
+        if seq in include_list:
+            position = include_list.index(seq)
+            included_sequences[position] = input_alignment[seq]
+    SeqIO.write(included_sequences,out_aln,'fasta')
+    

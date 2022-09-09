@@ -52,7 +52,7 @@ def get_3seq_breakpoints(aln_file,recipient_id,donor_id,recombinant_id,length_mi
         
     return breakpoints
 
-def identify_recombinations_with_3seq(alignment_file,recipient_id,donor_id,recipient_mapping,tmp,prefix,recombinant,recombinant_id):
+def identify_recombinations_with_3seq(alignment_file,recipient_id,donor_id,recipient_mapping,tmp,prefix,recombinant,recombinant_id,length_min,threeseq_p):
 
     from recognise.recombination import Recombination
 
@@ -64,7 +64,7 @@ def identify_recombinations_with_3seq(alignment_file,recipient_id,donor_id,recip
     continue_search = True
     
     while continue_search:
-        new_breakpoints = get_3seq_breakpoints(working_alignment,recipient_id,donor_id,recombinant_id)
+        new_breakpoints = get_3seq_breakpoints(working_alignment,recipient_id,donor_id,recombinant_id,length_min,threeseq_p)
         if len(new_breakpoints) == 0:
             continue_search = False
         else:

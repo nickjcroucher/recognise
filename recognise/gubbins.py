@@ -6,7 +6,8 @@ import sys
 import subprocess
 from Bio import SeqIO
 
-def identify_recombinations_with_gubbins(aln,recipient_id,recipient_mapping,tmp,prefix,recombinant,recombinant_name):
+def identify_recombinations_with_gubbins(aln,recipient_id,recipient_mapping,tmp,prefix,recombinant,
+                                            recombinant_name,window_min,window_max,snps_min,gubbins_p):
 
     # Avoid circular import
     from recognise.recombination import Recombination
@@ -18,7 +19,15 @@ def identify_recombinations_with_gubbins(aln,recipient_id,recipient_mapping,tmp,
         if id != recipient_id:
             recombinant_id = id
     # Run Gubbins
-    subprocess.check_output('run_gubbins.py --prefix ' + os.path.join(tmp,prefix) + ' --pairwise ' + aln + ' --outgroup ' + recombinant_id,
+    subprocess.check_output('run_gubbins.py --prefix ' + os.path.join(tmp,prefix) + \
+                            ' --pairwise ' + \
+                            ' --min-window-size ' + str(window_min) + \
+                            ' --max-window-size ' + str(window_max) + \
+                            ' --p-value ' + str(gubbins_p) + \
+                            ' --min-snps ' + str(snps_min) + \
+                            ' --outgroup ' + recombinant_id + \
+                            ' ' + aln + \
+                            ' &> /dev/null',
                             shell = True)
     # Process output
     recombination_list = []
