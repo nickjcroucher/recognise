@@ -51,22 +51,33 @@ class RecogniseTests(unittest.TestCase):
         subprocess.check_output('recognise --recipient ./data/AE007317.1.fasta' + \
                                 ' --recombinant-list ./data/one_recombinant.list' + \
                                 ' --output one_recombinant_test' + \
-                                ' --donor ./data/FQ312027.1.fasta --method 3seq ' + \
-                                 'one_recombinant_test',
+                                ' --donor ./data/FQ312027.1.fasta --method 3seq ',
                                 shell=True)
 
     def test_three_contiguous_recombinants(self):
         subprocess.check_output('recognise --recipient ./data/AE007317.1.fasta' + \
                                 ' --recombinant-list ./data/three_recombinants.list' + \
                                 ' --output multiple_recombinants_test' + \
-                                ' --donor ./data/FQ312027.1.fasta --method 3seq ' + \
-                                 'multiple_recombinants_test',
+                                ' --donor ./data/FQ312027.1.fasta --method 3seq ',
                                 shell=True)
 
     def test_one_noncontiguous_recombinant(self):
         subprocess.check_output('recognise --recipient ./data/AE007317.1.fasta' + \
                                 ' --recombinant-list ./data/three_recombinants.list' + \
                                 ' --output one_multifasta_recombinant_test' + \
-                                ' --donor ./data/FQ312027.1.fasta --method 3seq ' + \
-                                 'one_multifasta_recombinant_test',
+                                ' --donor ./data/FQ312027.1.fasta --method 3seq ',
+                                shell=True)
+
+    def test_input_alignment_3seq(self):
+        subprocess.check_output('recognise --recipient ./data/AE007317.1.fasta' + \
+                                ' --aln-input ./data/recipient_donor_recombinant.aln' + \
+                                ' --output one_multifasta_recombinant_test' + \
+                                ' --donor ./data/FQ312027.1.fasta --method 3seq ',
+                                shell=True)
+
+    def test_input_alignment_gubbins(self):
+        subprocess.check_output('recognise --recipient ./data/AE007317.1.fasta' + \
+                                ' --aln-input ./data/recipient_recombinant.aln' + \
+                                ' --output one_multifasta_recombinant_test' + \
+                                ' --donor ./data/FQ312027.1.fasta --method 3seq ',
                                 shell=True)
