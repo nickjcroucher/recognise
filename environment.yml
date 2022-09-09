@@ -15,6 +15,7 @@ dependencies:
   - gfatools
   # recombination
   - gubbins>=3.2.1
+  - 3seq >=1.8
   # testing
   - pytest
   - pytest-cov
