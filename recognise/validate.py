@@ -18,10 +18,12 @@ def validate_fasta(fn, report = False):
         sys.exit(1)
 
 def validate_input_files(args):
-    # check FASTA files
+    # check FASTA file for recipient
     id,length = validate_fasta(args.recipient, report = True)
+    # check FASTA file for donor
+    donor_id = None
     if args.donor:
-        validate_fasta(args.donor)
+        donor_id,length = validate_fasta(args.donor, report = True)
     # check recombinant files exist
     recomb_dict = {}
     if os.path.exists(args.recombinant_list):
@@ -36,4 +38,4 @@ def validate_input_files(args):
     else:
         sys.stderr.write('Recombinant list file ' + fn + ' cannot be found\n')
         sys.exit(1)
-    return id,length,recomb_dict
+    return id,length,donor_id,recomb_dict

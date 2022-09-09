@@ -20,9 +20,11 @@ def run_lastz_alignment(seq1,seq2,tmp,prefix):
     # Return output file name
     return processed_maf_file
 
-def get_alignment_position_index(aln):
+def get_alignment_position_index(aln,recipient_id):
     aln_index = SeqIO.index(aln,'fasta')
-    recipient_id = list(aln_index.keys())[0]
+    if recipient_id not in aln_index:
+        sys.stderr.write('Cannot find recipient ' + recipient_id + ' in alignment\n')
+        sys.exit(1)
     recipient_sequence = aln_index[recipient_id]
     recipient_mapping = [x for x in range(0,len(recipient_sequence)+2)]
     i = 1

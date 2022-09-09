@@ -51,7 +51,7 @@ def main():
 
     # import functions
     from recognise.validate import validate_input_files
-    from recognise.alignment import compare_donor_recipient
+    from recognise.alignment import compare_donor_recipient, run_lastz_alignment
     from recognise.recombination import compare_recombinant_recipient, Recombination
     from recognise.output import output_analyses
 
@@ -69,12 +69,13 @@ def main():
             os.mkdir(args.aln_output)
     
     # validate input files
-    recipient_id,recipient_length,recombinants = validate_input_files(args)
+    recipient_id,recipient_length,donor_id,recombinants = validate_input_files(args)
     
     # compare the structure of the donor and recipient
     structural_comparison = {}
     donor_maf = None
     if args.donor is not None:
+        donor_maf = run_lastz_alignment(args.recipient,args.donor,temp_dir.name,args.output)
         structural_comparison = compare_donor_recipient(args.recipient,args.donor)
 
     # identify recombinations in recombinants
@@ -82,6 +83,7 @@ def main():
     for recombinant_name in recombinants.keys():
         recombinations[recombinant_name] = compare_recombinant_recipient(args.recipient,
                                                         recipient_id,
+                                                        donor_id,
                                                         recombinant_name,
                                                         recombinants[recombinant_name],
                                                         args.donor,
