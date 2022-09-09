@@ -79,5 +79,5 @@ class RecogniseTests(unittest.TestCase):
         subprocess.check_output('recognise --recipient ./data/AE007317.1.fasta' + \
                                 ' --aln-input ./data/recipient_recombinant.aln' + \
                                 ' --output one_multifasta_recombinant_test' + \
-                                ' --donor ./data/FQ312027.1.fasta --method 3seq ',
+                                ' --method gubbins ',
                                 shell=True)
